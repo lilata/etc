@@ -1,0 +1,11 @@
+#! /usr/bin/env sh
+start-pulseaudio-x11 &
+ibus-daemon -drx &
+dunst &
+# pidof pipewire || pipewire &
+# sxhkd &
+# dwmblocks &
+# pidof pulseaudio || pulseaudio --daemonize=no &
+# xcompmgr &
+# pidof urxvtd || urxvtd -q -f &
+[ -f $HOME/.config/wallpape/wallpape.png ] && xwallpaper --zoom $HOME/.config/wallpape/wallpape.png

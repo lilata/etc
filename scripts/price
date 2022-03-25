@@ -1,0 +1,17 @@
+#! /bin/zsh
+# usage: price CRYPTO_CURRENCY [NORMAL_RANGE]
+# examples:
+# price bitcoin (returns usd price value)
+# price bitcoin 9000 10000 (returns "LOW", "OK" or "HIGH")
+PRICE=$(curl -L -s "https://api.coingecko.com/api/v3/simple/price?ids=$1&vs_currencies=usd"|jq ".\"$1\".usd")
+LOW="$2"
+HIGH="$3"
+if [ -z $3 ];then
+    echo ${PRICE}
+else
+    HIGH_OR_LOW=0
+    (( $PRICE > $HIGH )) && STATUS='HIGH' && HIGH_OR_LOW=1
+    (( $PRICE < $LOW )) && STATUS='LOW' && HIGH_OR_LOW=1
+    [ "${HIGH_OR_LOW}" = "0" ] && STATUS='OK'
+    echo $STATUS
+fi

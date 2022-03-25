@@ -1,0 +1,30 @@
+command=~/.scripts/statusbar/$BLOCK_NAME
+separator_block_width=20
+markup=pango
+
+[memory]
+interval=3
+
+[volume]
+interval=once
+signal=10
+
+[disk]
+interval=60
+command=disk /
+
+[battery]
+interval=5
+
+[clock]
+interval=3
+[internet]
+interval=10
+# [price]
+# command=echo AMPL $(price ampleforth 0.5 2.3)
+# interval=10
+# [price]
+# command=echo XSN $(price stakenet 0.21 0.29)
+# interval=40
+# [help-icon]
+# interval=once

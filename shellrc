@@ -1,0 +1,89 @@
+#! /bin/env sh
+# If bash is your login shell, and you run rsync or git push onto this machine,
+# bash will see the $SSH_* variables and will load bashrc despite not being
+# an interactive shell. The startup messages then fuck up the git transfer.
+# This code bails out if shell is not interactive.
+case "$-" in
+ (*i*) ;;
+ (*) return;;
+esac
+
+# Aliases
+alias f="$FILE"
+alias nf='neofetch'
+alias t='date +%s'
+alias l='ls -Flash'
+alias ls='ls --color'
+alias y='youtube-dl'
+alias yu='youtube-dl --get-url '
+alias yv='youtube-viewer'
+alias p='mgraftcp --socks5=127.0.0.1:1080'
+alias z='zathura --fork'
+alias v="$EDITOR"
+alias c="xclip -selection clipboard" # copy stdin
+alias nb='newsboat'
+alias download='aria2c -x 8'
+alias mi='make && sudo make install'
+alias mc='make clean'
+alias mci='make clean && make && sudo make install'
+alias nnn='nnn -dHE'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# git alias
+alias gl='git log --graph --oneline --decorate'
+alias gp='git push'
+alias gs='git status'
+alias ga='git add'
+alias gaa='git add .'
+alias gc='git commit'
+alias gra='git remote add'
+
+alias psC='echo These are the biggest CPU hogs!!! && ps axch -o cmd,%cpu --sort=-%cpu|head && echo BTW, here is your CPU temperature! && sensors' # needs lm_sensors
+
+# xbps on voidlinux
+alias xi='sudo xbps-install'
+alias xq='sudo xbps-query'
+alias xr='sudo xbps-remove'
+alias xs='sudo xbps-src'
+
+# FUNCTIONS
+o() {
+    xdg-open "$(fzf)"
+}
+findd() {
+    find . -name "$1"
+}
+psM() {
+    echo These are the biggest memory hogs!! && free -h |awk '/^Mem:/ {print $3 " USED / " $2 " TOTAL"}' && ps axch -o cmd,%mem --sort=-%mem|head
+}
+
+sp() { # setup proxy
+    export HTTPS_PROXY='http://127.0.0.1:8080'
+    export HTTP_PROXY='http://127.0.0.1:8080'
+    export ALL_PROXY="socks5h://127.0.0.1:1080"
+    export SOCKS_PROXY='socks5h://127.0.0.1:1080'
+    export https_proxy='http://127.0.0.1:8080'
+    export http_proxy='http://127.0.0.1:8080'
+    export all_proxy="socks5h://127.0.0.1:1080"
+    export socks_proxy='socks5h://127.0.0.1:1080'
+}
+
+np() { # unset proxy
+    unset HTTPS_PROXY
+    unset HTTP_PROXY
+    unset ALL_PROXY
+    unset SOCKS_PROXY
+    unset https_proxy
+    unset http_proxy
+    unset all_proxy
+    unset socks_proxy
+
+}
+if [ -d "$HOME/.shellrc.d" ]; then
+    for f in $HOME/.shellrc.d/*.sh; do
+        source $f
+    done
+fi
+

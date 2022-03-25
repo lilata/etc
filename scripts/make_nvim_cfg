@@ -1,0 +1,15 @@
+#! /bin/env sh
+NVIM_HOME="$HOME/.config/nvim"
+mkdir "$NVIM_HOME" -p
+test -f "$NVIM_HOME/init.vim" && mv -v "$NVIM_HOME/init.vim" "$NVIM_HOME/init.vim.old"
+
+if test -f "$NVIM_HOME/autoload" || test -d "$NVIM_HOME/autoload"
+then
+    OLD_AUTOLOAD="$NVIM_HOME/autoload.old"
+    test -d "$OLD_AUTOLOAD" && OLD_AUTOLOAD="$(mktemp -u $NVIM_HOME/autoload.XXXXXX.old)"
+    mv -v "$NVIM_HOME/autoload" "$OLD_AUTOLOAD"
+fi
+
+
+ln -vs "$HOME/.vimrc" "$NVIM_HOME/init.vim"
+ln -vs "$HOME/.vim/autoload" "$NVIM_HOME/autoload"
