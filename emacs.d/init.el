@@ -213,7 +213,6 @@
 (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 ;;; Terminal
 (straight-use-package 'vterm)
-(vterm-module-compile)
 (defun toggle-vterm ()
   (interactive)
   (if (eq major-mode 'vterm-mode)
@@ -248,3 +247,7 @@
 
 (straight-use-package 'nyan-mode)
 (nyan-mode 1)
+
+
+;; Other things
+(vterm-module-compile)
