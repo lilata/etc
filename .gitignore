@@ -13,6 +13,7 @@ emacs.d/eln-cache
 emacs.d/straight
 emacs.d/eshell/history
 emacs.d/recentf
+*.~undo-tree~
 
 # ncmpcpp
 config/ncmpcpp/error.log
