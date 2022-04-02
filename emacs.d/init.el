@@ -127,14 +127,17 @@
 (setq general-default-keymaps 'evil-normal-state-map)
 (general-define-key :prefix "SPC"
                     "SPC" 'helm-find-files
-                    "o" 'ace-window)
+                    "o" 'ace-window
+                    "f" 'helm-projectile-find-file-dwim)
 (general-define-key :prefix "SPC b"
                     "b" 'helm-buffers-list
                     "k" 'kill-buffer
                     )
 
 ;;; programming
-
+;; projects
+(straight-use-package 'projectile)
+(straight-use-package 'helm-projectile)
 ;;; company
 (straight-use-package 'company)
 (setq company-idle-delay 0)
@@ -213,6 +216,7 @@
 (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
 ;;; Terminal
 (straight-use-package 'vterm)
+(vterm-module-compile)
 (defun toggle-vterm ()
   (interactive)
   (if (eq major-mode 'vterm-mode)
@@ -247,7 +251,3 @@
 
 (straight-use-package 'nyan-mode)
 (nyan-mode 1)
-
-
-;; Other things
-(vterm-module-compile)
