@@ -17,3 +17,5 @@ emacs.d/projects
 
 # ncmpcpp
 config/ncmpcpp/error.log
+# undo tree
+*.~undo-tree~
