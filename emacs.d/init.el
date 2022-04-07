@@ -172,6 +172,10 @@
 ;;; nim
 (straight-use-package 'nim-mode)
 
+;;; svelte
+(straight-use-package 'svelte-mode)
+(add-hook 'svelte-mode-hook #'lsp)
+
 ;;; LSP
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-python-ms)

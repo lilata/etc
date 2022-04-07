@@ -1,0 +1,147 @@
+(undo-tree-save-format-version . 1)
+"7b6c9c00c95268f658b354bddd0425d4e60ac511"
+[nil nil nil nil (25157 6210 83076 603000) 0 nil]
+([nil nil ((#("k" 0 1 (fontified t)) . -5382) (undo-tree-id7 . -1) (undo-tree-id8 . -1) 5383 (5378 . 5383) (5377 . 5379) (#("(" 0 1 (fontified nil face font-lock-comment-face)) . -5377) (5377 . 5378) (5376 . 5377) (5372 . 5376) (#("e" 0 1 (fontified t face font-lock-comment-face)) . -5372) (undo-tree-id9 . -1) 5373 (5366 . 5373) (5365 . 5366) (5364 . 5365) (t 25157 5714 934841 450000) 5362) nil (25166 16483 441339 446000) 0 nil])
+([nil nil ((#("(add-)
+" 0 1 (fontified t face (rainbow-delimiters-depth-1-face)) 1 5 (fontified t) 5 6 (fontified t face (rainbow-delimiters-depth-1-face)) 6 7 (fontified t)) . 5377) (undo-tree-id0 . -4) (undo-tree-id1 . 7) (undo-tree-id2 . -1) (undo-tree-id3 . 2) (undo-tree-id4 . -6) (undo-tree-id5 . 2) (undo-tree-id6 . -4) 5381) nil (25166 16483 441332 684000) 0 nil])
+([nil nil ((#("d" 0 1 (fontified t)) . -5378) (undo-tree-id20 . -1) (#("d" 0 1 (fontified t)) . -5379) (undo-tree-id21 . -1) 5380 (5378 . 5380) (5377 . 5379) (#("(" 0 1 (fontified nil face font-lock-comment-face)) . -5377) (5377 . 5378) (t 25166 16483 463791 468000)) nil (25166 16527 103508 498000) 0 nil])
+([nil nil ((#("
+" 0 1 (fontified t)) . 5365)) nil (25166 16527 103504 941000) 0 nil])
+([nil nil ((#(";;; svelte
+" 0 4 (fontified t face font-lock-comment-delimiter-face) 4 10 (fontified t face font-lock-comment-face) 10 11 (fontified t face font-lock-comment-face)) . 5365) (undo-tree-id16 . -11) (undo-tree-id17 . -11) (undo-tree-id18 . -11) (undo-tree-id19 . -10)) nil (25166 16527 103504 2000) 0 nil])
+([nil nil ((#("()
+" 0 1 (fontified t face (rainbow-delimiters-depth-1-face)) 1 2 (fontified t face (rainbow-delimiters-depth-1-face)) 2 3 (fontified t)) . 5365) (undo-tree-id10 . 2) (undo-tree-id11 . -2) (undo-tree-id12 . 3) (undo-tree-id13 . -1) (undo-tree-id14 . 2) (undo-tree-id15 . -2)) nil (25166 16527 103496 625000) 0 nil])
+([nil nil ((5365 . 5366) (t 25166 16527 140620 446000)) nil (25166 16629 895765 389000) 0 nil])
+([nil nil ((4050 . 8000) (#(")
+(general-define-key :prefix \"SPC b\"
+                    \"b\" 'helm-buffers-list
+                    \"k\" 'kill-buffer
+                    )
+
+;;; programming
+
+;;; company
+(straight-use-package 'company)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd \"M-n\") nil)
+  (define-key company-active-map (kbd \"<tab>\") #'company-select-next)
+  (define-key company-active-map (kbd \"TAB\") #'company-select-next)
+  (define-key company-active-map (kbd \"C-i\") #'company-select-next))
+(setq company-selection-wrap-around t)
+(company-tng-configure-default)
+(add-hook 'after-init-hook 'global-company-mode)
+
+;;; Common Lisp
+(straight-use-package 'slime)
+(setq inferior-lisp-program \"ros run\")
+;;(straight-use-package 'slime-company)
+;;(setq slime-company-completion 'fuzzy
+;;      slime-company-after-completion 'slime-company-just-one-space)
+(straight-use-package 'lispy)
+;;; python
+(straight-use-package 'pyvenv)
+(setenv \"WORKON_HOME\" \"~/.local/share/virtualenvs\") ;; use the path from pipenv
+
+;;; elixir
+(straight-use-package 'elixir-mode)
+(add-to-list 'exec-path \"~/.local/share/elixir-ls\")
+(add-hook 'elixir-mode-hook #'lsp)
+;;; golang
+(straight-use-package 'go-mode)
+(add-hook 'go-mode-hook #'lsp)
+;;; nim
+(straight-use-package 'nim-mode)
+
+;;; LSP
+(straight-use-package 'lsp-mode)
+(straight-use-package 'lsp-python-ms)
+(setq lsp-python-ms-auto-install-server t)
+
+;;; HTML
+(straight-use-package 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+(defun evil-emmet-expand-line ()
+  (interactive)
+  (evil-forward-char)
+  (emmet-expand-line nil)
+  (evil-insert nil)
+  )
+(define-key evil-normal-state-map (kbd \",\") 'evil-emmet-expand-line)
+
+;;; end programming
+
+
+;;; Misc
+
+(straight-use-package 'rg)
+
+(delete-selection-mode 1)
+
+(straight-use-package 'ace-window)
+(global-set-key (kbd \"M-o\") 'ace-window)
+
+(straight-use-package 'neotree)
+(global-set-key (kbd \"M-1\") 'neotree-toggle)
+(setq neo-smart-open t)
+
+(evil-define-key 'normal neotree-mode-map (kbd \"TAB\") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd \"SPC\") 'neotree-quick-look)
+(evil-define-key 'normal neotree-mode-map (kbd \"q\") 'neotree-hide)
+(evil-define-key 'normal neotree-mode-map (kbd \"RET\") 'neotree-enter)
+(evil-define-key 'normal neotree-mode-map (kbd \"g\") 'neotree-refresh)
+(evil-define-key 'normal neotree-mode-map (kbd \"n\") 'neotree-next-line)
+(evil-define-key 'normal neotree-mode-map (kbd \"p\") 'neotree-previous-line)
+(evil-define-key 'normal neotree-mode-map (kbd \"A\") 'neotree-stretch-toggle)
+(evil-define-key 'normal neotree-mode-map (kbd \"H\") 'neotree-hidden-file-toggle)
+;;; Terminal
+(straight-use-package 'vterm)
+(defun toggle-vterm ()
+  (interactive)
+  (if (eq major-mode 'vterm-mode)
+      (delete-window)
+    (vterm-other-window)))
+(global-set-key (kbd \"M-2\") 'toggle-vterm)
+
+(straight-use-package 'undo-tree)
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
+
+;;; themes
+(straight-use-package 'doom-themes)
+;; Global settings (defaults)
+(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+(load-theme 'doom-sourcerer t)
+
+;; Enable flashing mode-line on errors
+(doom-themes-visual-bell-config)
+
+;; Enable custom neotree theme (all-the-icons must be installed!)
+(doom-themes-neotree-config)
+;; or for treemacs users
+(setq doom-themes-treemacs-theme \"doom-colors\") ; use the colorful treemacs theme
+(doom-themes-treemacs-config)
+
+;; Corrects (and improves) org-mode's native fontification.
+(doom-themes-org-config)
+(straight-use-package 'all-the-icons)
+
+
+(straight-use-package 'nyan-mode)
+(nyan-mode 1)
+
+
+;; Other things
+(vterm-module-compile" 0 1 (fontified t face (rainbow-delimiters-depth-1-face)) 1 2 (fontified t) 2 3 (fontified t face (rainbow-delimiters-depth-1-face)) 3 22 (fontified t) 22 29 (fontified t face font-lock-builtin-face) 29 30 (fontified t) 30 37 (fontified t face font-lock-string-face) 37 58 (fontified t) 58 61 (fontified t face font-lock-string-face) 61 101 (fontified t) 101 104 (fontified t face font-lock-string-face) 104 138 (fontified t) 138 139 (fontified t face (rainbow-delimiters-depth-1-face)) 139 141 (fontified t) 141 145 (fontified t face font-lock-comment-delimiter-face) 145 157 (fontified t face font-lock-comment-face) 157 158 (fontified t) 158 162 (fontified t face font-lock-comment-delimiter-face) 162 170 (fontified t face font-lock-comment-face) 170 171 (fontified t face (rainbow-delimiters-depth-1-face)) 171 200 (fontified t) 200 201 (fontified t face (rainbow-delimiters-depth-1-face)) 201 202 (fontified t) 202 203 (fontified t face (rainbow-delimiters-depth-1-face)) 203 207 (fontified t face font-lock-keyword-face) 207 228 (fontified t) 228 229 (fontified t face (rainbow-delimiters-depth-1-face)) 229 230 (fontified t) 230 231 (fontified t face (rainbow-delimiters-depth-1-face)) 231 235 (fontified t face font-lock-keyword-face) 235 267 (fontified t) 267 268 (fontified t face (rainbow-delimiters-depth-1-face)) 268 269 (fontified t) 269 270 (fontified t face (rainbow-delimiters-depth-1-face)) 270 290 (fontified t face font-lock-keyword-face) 290 302 (fontified t) 302 303 (fontified t face (rainbow-delimiters-depth-2-face)) 303 333 (fontified t) 333 334 (fontified t face (rainbow-delimiters-depth-3-face)) 334 338 (fontified t) 338 343 (fontified t face font-lock-string-face) 343 344 (fontified t face (rainbow-delimiters-depth-3-face)) 344 348 (fontified t) 348 349 (fontified t face (rainbow-delimiters-depth-2-face)) 349 352 (fontified t) 352 353 (fontified t face (rainbow-delimiters-depth-2-face)) 353 383 (fontified t) 383 384 (fontified t face (rainbow-delimiters-depth-3-face)) 384 388 (fontified t) 388 395 (fontified t face font-lock-string-face) 395 396 (fontified t face (rainbow-delimiters-depth-3-face)) 396 418 (fontified t) 418 419 (fontified t face (rainbow-delimiters-depth-2-face)) 419 422 (fontified t) 422 423 (fontified t face (rainbow-delimiters-depth-2-face)) 423 453 (fontified t) 453 454 (fontified t face (rainbow-delimiters-depth-3-face)) 454 458 (fontified t) 458 463 (fontified t face font-lock-string-face) 463 464 (fontified t face (rainbow-delimiters-depth-3-face)) 464 486 (fontified t) 486 487 (fontified t face (rainbow-delimiters-depth-2-face)) 487 490 (fontified t) 490 491 (fontified t face (rainbow-delimiters-depth-2-face)) 491 521 (fontified t) 521 522 (fontified t face (rainbow-delimiters-depth-3-face)) 522 526 (fontified t) 526 531 (fontified t face font-lock-string-face) 531 532 (fontified t face (rainbow-delimiters-depth-3-face)) 532 554 (fontified t) 554 555 (fontified t face (rainbow-delimiters-depth-2-face)) 555 556 (fontified t face (rainbow-delimiters-depth-1-face)) 556 557 (fontified t) 557 558 (fontified t face (rainbow-delimiters-depth-1-face)) 558 562 (fontified t face font-lock-keyword-face) 562 594 (fontified t) 594 595 (fontified t face (rainbow-delimiters-depth-1-face)) 595 596 (fontified t) 596 597 (fontified t face (rainbow-delimiters-depth-1-face)) 597 626 (fontified t) 626 627 (fontified t face (rainbow-delimiters-depth-1-face)) 627 628 (fontified t) 628 629 (fontified t face (rainbow-delimiters-depth-1-face)) 629 675 (fontified t) 675 676 (fontified t face (rainbow-delimiters-depth-1-face)) 676 678 (fontified t) 678 682 (fontified t face font-lock-comment-delimiter-face) 682 694 (fontified t face font-lock-comment-face) 694 695 (fontified t face (rainbow-delimiters-depth-1-face)) 695 722 (fontified t) 722 723 (fontified t face (rainbow-delimiters-depth-1-face)) 723 724 (fontified t) 724 725 (fontified t face (rainbow-delimiters-depth-1-face)) 725 729 (fontified t face font-lock-keyword-face) 729 752 (fontified t) 752 761 (fontified t face font-lock-string-face) 761 762 (fontified t face (rainbow-delimiters-depth-1-face)) 762 763 (fontified t) 763 765 (fontified t face font-lock-comment-delimiter-face) 765 803 (fontified t face font-lock-comment-face) 803 805 (fontified t face font-lock-comment-delimiter-face) 805 843 (fontified t face font-lock-comment-face) 843 851 (fontified t face font-lock-comment-delimiter-face) 851 913 (fontified t face font-lock-comment-face) 913 914 (fontified t face (rainbow-delimiters-depth-1-face)) 914 941 (fontified t) 941 942 (fontified t face (rainbow-delimiters-depth-1-face)) 942 943 (fontified t) 943 947 (fontified t face font-lock-comment-delimiter-face) 947 954 (fontified t face font-lock-comment-face) 954 955 (fontified t face (rainbow-delimiters-depth-1-face)) 955 983 (fontified t) 983 984 (fontified t face (rainbow-delimiters-depth-1-face)) 984 985 (fontified t) 985 986 (fontified t face (rainbow-delimiters-depth-1-face)) 986 993 (fontified t) 993 1006 (fontified t face font-lock-string-face) 1006 1007 (fontified t) 1007 1035 (fontified t face font-lock-string-face) 1035 1036 (fontified t face (rainbow-delimiters-depth-1-face)) 1036 1037 (fontified t) 1037 1040 (fontified t face font-lock-comment-delimiter-face) 1040 1065 (fontified t face font-lock-comment-face) 1065 1066 (fontified t) 1066 1070 (fontified t face font-lock-comment-delimiter-face) 1070 1077 (fontified t face font-lock-comment-face) 1077 1078 (fontified t face (rainbow-delimiters-depth-1-face)) 1078 1111 (fontified t) 1111 1112 (fontified t face (rainbow-delimiters-depth-1-face)) 1112 1113 (fontified t) 1113 1114 (fontified t face (rainbow-delimiters-depth-1-face)) 1114 1137 (fontified t) 1137 1163 (fontified t face font-lock-string-face) 1163 1164 (fontified t face (rainbow-delimiters-depth-1-face)) 1164 1165 (fontified t) 1165 1166 (fontified t face (rainbow-delimiters-depth-1-face)) 1166 1198 (fontified t) 1198 1199 (fontified t face (rainbow-delimiters-depth-1-face)) 1199 1200 (fontified t) 1200 1204 (fontified t face font-lock-comment-delimiter-face) 1204 1211 (fontified t face font-lock-comment-face) 1211 1212 (fontified t face (rainbow-delimiters-depth-1-face)) 1212 1241 (fontified t) 1241 1242 (fontified t face (rainbow-delimiters-depth-1-face)) 1242 1243 (fontified t) 1243 1244 (fontified t face (rainbow-delimiters-depth-1-face)) 1244 1272 (fontified t) 1272 1273 (fontified t face (rainbow-delimiters-depth-1-face)) 1273 1274 (fontified t) 1274 1278 (fontified t face font-lock-comment-delimiter-face) 1278 1282 (fontified t face font-lock-comment-face) 1282 1283 (fontified t face (rainbow-delimiters-depth-1-face)) 1283 1313 (fontified t) 1313 1314 (fontified t face (rainbow-delimiters-depth-1-face)) 1314 1315 (fontified t) 1316 1320 (face font-lock-comment-delimiter-face) 1320 1323 (face font-lock-comment-face) 1323 1324 (face font-lock-comment-face) 1324 1325 (face (rainbow-delimiters-depth-1-face)) 1355 1356 (face (rainbow-delimiters-depth-1-face)) 1357 1358 (face (rainbow-delimiters-depth-1-face)) 1393 1394 (face (rainbow-delimiters-depth-1-face)) 1395 1396 (face (rainbow-delimiters-depth-1-face)) 1396 1400 (face font-lock-keyword-face) 1436 1437 (face (rainbow-delimiters-depth-1-face)) 1439 1443 (face font-lock-comment-delimiter-face) 1443 1448 (face font-lock-comment-face) 1448 1449 (face (rainbow-delimiters-depth-1-face)) 1481 1482 (face (rainbow-delimiters-depth-1-face)) 1483 1484 (face (rainbow-delimiters-depth-1-face)) 1520 1521 (face (rainbow-delimiters-depth-1-face)) 1522 1525 (face font-lock-comment-delimiter-face) 1525 1556 (face font-lock-comment-face) 1556 1557 (face (rainbow-delimiters-depth-1-face)) 1593 1594 (face (rainbow-delimiters-depth-1-face)) 1595 1598 (face font-lock-comment-delimiter-face) 1598 1631 (face font-lock-comment-face) 1631 1632 (face (rainbow-delimiters-depth-1-face)) 1632 1637 (face font-lock-keyword-face) 1638 1660 (face font-lock-function-name-face) 1661 1662 (face (rainbow-delimiters-depth-2-face)) 1662 1663 (face (rainbow-delimiters-depth-2-face)) 1666 1667 (face (rainbow-delimiters-depth-2-face)) 1667 1678 (face font-lock-keyword-face) 1678 1679 (face (rainbow-delimiters-depth-2-face)) 1682 1683 (face (rainbow-delimiters-depth-2-face)) 1700 1701 (face (rainbow-delimiters-depth-2-face)) 1704 1705 (face (rainbow-delimiters-depth-2-face)) 1726 1727 (face (rainbow-delimiters-depth-2-face)) 1730 1731 (face (rainbow-delimiters-depth-2-face)) 1746 1747 (face (rainbow-delimiters-depth-2-face)) 1750 1751 (face (rainbow-delimiters-depth-1-face)) 1752 1753 (face (rainbow-delimiters-depth-1-face)) 1786 1787 (face (rainbow-delimiters-depth-2-face)) 1791 1794 (face font-lock-string-face) 1794 1795 (face (rainbow-delimiters-depth-2-face)) 1819 1820 (face (rainbow-delimiters-depth-1-face)) 1822 1826 (face font-lock-comment-delimiter-face) 1826 1842 (face font-lock-comment-face) 1844 1848 (face font-lock-comment-delimiter-face) 1848 1853 (face font-lock-comment-face) 1854 1855 (face (rainbow-delimiters-depth-1-face)) 1879 1880 (face (rainbow-delimiters-depth-1-face)) 1882 1883 (face (rainbow-delimiters-depth-1-face)) 1906 1907 (face (rainbow-delimiters-depth-1-face)) 1909 1910 (face (rainbow-delimiters-depth-1-face)) 1942 1943 (face (rainbow-delimiters-depth-1-face)) 1944 1945 (face (rainbow-delimiters-depth-1-face)) 1960 1961 (face (rainbow-delimiters-depth-2-face)) 1965 1970 (face font-lock-string-face) 1970 1971 (face (rainbow-delimiters-depth-2-face)) 1983 1984 (face (rainbow-delimiters-depth-1-face)) 1986 1987 (face (rainbow-delimiters-depth-1-face)) 2016 2017 (face (rainbow-delimiters-depth-1-face)) 2018 2019 (face (rainbow-delimiters-depth-1-face)) 2034 2035 (face (rainbow-delimiters-depth-2-face)) 2039 2044 (face font-lock-string-face) 2044 2045 (face (rainbow-delimiters-depth-2-face)) 2061 2062 (face (rainbow-delimiters-depth-1-face)) 2063 2064 (face (rainbow-delimiters-depth-1-face)) 2064 2068 (face font-lock-keyword-face) 2085 2086 (face (rainbow-delimiters-depth-1-face)) 2088 2089 (face (rainbow-delimiters-depth-1-face)) 2089 2104 (face font-lock-keyword-face) 2130 2131 (face (rainbow-delimiters-depth-2-face)) 2135 2140 (face font-lock-string-face) 2140 2141 (face (rainbow-delimiters-depth-2-face)) 2156 2157 (face (rainbow-delimiters-depth-1-face)) 2158 2159 (face (rainbow-delimiters-depth-1-face)) 2159 2174 (face font-lock-keyword-face) 2200 2201 (face (rainbow-delimiters-depth-2-face)) 2205 2210 (face font-lock-string-face) 2210 2211 (face (rainbow-delimiters-depth-2-face)) 2231 2232 (face (rainbow-delimiters-depth-1-face)) 2233 2234 (face (rainbow-delimiters-depth-1-face)) 2234 2249 (face font-lock-keyword-face) 2275 2276 (face (rainbow-delimiters-depth-2-face)) 2280 2283 (face font-lock-string-face) 2283 2284 (face (rainbow-delimiters-depth-2-face)) 2298 2299 (face (rainbow-delimiters-depth-1-face)) 2300 2301 (face (rainbow-delimiters-depth-1-face)) 2301 2316 (face font-lock-keyword-face) 2342 2343 (face (rainbow-delimiters-depth-2-face)) 2347 2352 (face font-lock-string-face) 2352 2353 (face (rainbow-delimiters-depth-2-face)) 2368 2369 (face (rainbow-delimiters-depth-1-face)) 2370 2371 (face (rainbow-delimiters-depth-1-face)) 2371 2386 (face font-lock-keyword-face) 2412 2413 (face (rainbow-delimiters-depth-2-face)) 2417 2420 (face font-lock-string-face) 2420 2421 (face (rainbow-delimiters-depth-2-face)) 2438 2439 (face (rainbow-delimiters-depth-1-face)) 2440 2441 (face (rainbow-delimiters-depth-1-face)) 2441 2456 (face font-lock-keyword-face) 2482 2483 (face (rainbow-delimiters-depth-2-face)) 2487 2490 (face font-lock-string-face) 2490 2491 (face (rainbow-delimiters-depth-2-face)) 2510 2511 (face (rainbow-delimiters-depth-1-face)) 2512 2513 (face (rainbow-delimiters-depth-1-face)) 2513 2528 (face font-lock-keyword-face) 2554 2555 (face (rainbow-delimiters-depth-2-face)) 2559 2562 (face font-lock-string-face) 2562 2563 (face (rainbow-delimiters-depth-2-face)) 2586 2587 (face (rainbow-delimiters-depth-1-face)) 2588 2589 (face (rainbow-delimiters-depth-1-face)) 2589 2604 (face font-lock-keyword-face) 2630 2631 (face (rainbow-delimiters-depth-2-face)) 2635 2638 (face font-lock-string-face) 2638 2639 (face (rainbow-delimiters-depth-2-face)) 2663 2664 (face (rainbow-delimiters-depth-1-face)) 2665 2666 (face (rainbow-delimiters-depth-1-face)) 2666 2681 (face font-lock-keyword-face) 2707 2708 (face (rainbow-delimiters-depth-2-face)) 2712 2715 (face font-lock-string-face) 2715 2716 (face (rainbow-delimiters-depth-2-face)) 2744 2745 (face (rainbow-delimiters-depth-1-face)) 2746 2750 (face font-lock-comment-delimiter-face) 2750 2759 (face font-lock-comment-face) 2759 2760 (face (rainbow-delimiters-depth-1-face)) 2787 2788 (face (rainbow-delimiters-depth-1-face)) 2789 2790 (face (rainbow-delimiters-depth-1-face)) 2790 2795 (face font-lock-keyword-face) 2796 2808 (face font-lock-function-name-face) 2809 2810 (face (rainbow-delimiters-depth-2-face)) 2810 2811 (face (rainbow-delimiters-depth-2-face)) 2814 2815 (face (rainbow-delimiters-depth-2-face)) 2815 2816 (face font-lock-keyword-face) 2816 2824 (face font-lock-keyword-face) 2824 2826 (face font-lock-keyword-face) 2826 2827 (face (rainbow-delimiters-depth-2-face)) 2830 2831 (face (rainbow-delimiters-depth-2-face)) 2831 2833 (face font-lock-keyword-face) 2834 2835 (face (rainbow-delimiters-depth-3-face)) 2860 2861 (face (rainbow-delimiters-depth-3-face)) 2868 2869 (face (rainbow-delimiters-depth-3-face)) 2882 2883 (face (rainbow-delimiters-depth-3-face)) 2888 2889 (face (rainbow-delimiters-depth-3-face)) 2907 2908 (face (rainbow-delimiters-depth-3-face)) 2908 2909 (face (rainbow-delimiters-depth-2-face)) 2909 2910 (face (rainbow-delimiters-depth-1-face)) 2911 2912 (face (rainbow-delimiters-depth-1-face)) 2927 2928 (face (rainbow-delimiters-depth-2-face)) 2932 2937 (face font-lock-string-face) 2937 2938 (face (rainbow-delimiters-depth-2-face)) 2952 2953 (face (rainbow-delimiters-depth-1-face)) 2955 2956 (face (rainbow-delimiters-depth-1-face)) 2987 2988 (face (rainbow-delimiters-depth-1-face)) 2989 2990 (face (rainbow-delimiters-depth-1-face)) 3011 3012 (face (rainbow-delimiters-depth-1-face)) 3013 3014 (face (rainbow-delimiters-depth-1-face)) 3045 3046 (face (rainbow-delimiters-depth-1-face)) 3048 3052 (face font-lock-comment-delimiter-face) 3052 3056 (face font-lock-comment-face) 3056 3059 (face font-lock-comment-face) 3059 3060 (face (rainbow-delimiters-depth-1-face)) 3093 3094 (face (rainbow-delimiters-depth-1-face)) 3095 3098 (face font-lock-comment-delimiter-face) 3098 3125 (face font-lock-comment-face) 3125 3126 (face (rainbow-delimiters-depth-1-face)) 3126 3130 (face font-lock-keyword-face) 3160 3162 (face font-lock-comment-delimiter-face) 3162 3199 (face font-lock-comment-face) 3232 3233 (face (rainbow-delimiters-depth-1-face)) 3234 3236 (face font-lock-comment-delimiter-face) 3236 3276 (face font-lock-comment-face) 3276 3277 (face (rainbow-delimiters-depth-1-face)) 3305 3306 (face (rainbow-delimiters-depth-1-face)) 3308 3311 (face font-lock-comment-delimiter-face) 3311 3347 (face font-lock-comment-face) 3347 3348 (face (rainbow-delimiters-depth-1-face)) 3378 3379 (face (rainbow-delimiters-depth-1-face)) 3381 3384 (face font-lock-comment-delimiter-face) 3384 3447 (face font-lock-comment-face) 3447 3448 (face (rainbow-delimiters-depth-1-face)) 3474 3475 (face (rainbow-delimiters-depth-1-face)) 3476 3479 (face font-lock-comment-delimiter-face) 3479 3501 (face font-lock-comment-face) 3501 3502 (face (rainbow-delimiters-depth-1-face)) 3502 3506 (face font-lock-keyword-face) 3534 3547 (face font-lock-string-face) 3547 3548 (face (rainbow-delimiters-depth-1-face)) 3549 3551 (face font-lock-comment-delimiter-face) 3551 3583 (face font-lock-comment-face) 3583 3584 (face (rainbow-delimiters-depth-1-face)) 3611 3612 (face (rainbow-delimiters-depth-1-face)) 3614 3617 (face font-lock-comment-delimiter-face) 3617 3674 (face font-lock-comment-face) 3674 3675 (face (rainbow-delimiters-depth-1-face)) 3697 3698 (face (rainbow-delimiters-depth-1-face)) 3699 3700 (face (rainbow-delimiters-depth-1-face)) 3735 3736 (face (rainbow-delimiters-depth-1-face)) 3739 3740 (face (rainbow-delimiters-depth-1-face)) 3771 3772 (face (rainbow-delimiters-depth-1-face)) 3773 3774 (face (rainbow-delimiters-depth-1-face)) 3785 3786 (face (rainbow-delimiters-depth-1-face)) 3789 3792 (face font-lock-comment-delimiter-face) 3792 3805 (face font-lock-comment-face) 3805 3806 (face (rainbow-delimiters-depth-1-face))) . 4050) (undo-tree-id44 . 2510) (undo-tree-id45 . -1315) (undo-tree-id46 . -985) (undo-tree-id47 . -1315) (undo-tree-id48 . -1066) (undo-tree-id49 . -1066) 2291 (t 25166 16577 650851 148000)) nil (25166 16629 895764 123000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 5552 . 5553) (nil fontified nil 5542 . 5553) (5542 . 5553) (5541 . 5542) (5537 . 5541) (#("g" 0 1 (fontified t)) . -5537) (undo-tree-id22 . -1) (#("e" 0 1 (fontified t)) . -5538) (undo-tree-id23 . -1) (#(" " 0 1 (fontified t)) . -5539) (undo-tree-id24 . -1) 5540 (5535 . 5540) (#("k" 0 1 (fontified t)) . -5535) (undo-tree-id25 . -1) 5536 (5534 . 5536) (#("c" 0 1 (fontified t)) . -5534) (undo-tree-id26 . -1) (#("k" 0 1 (fontified t)) . -5535) (undo-tree-id27 . -1) (#("a" 0 1 (fontified t)) . -5536) (undo-tree-id28 . -1) (#("g" 0 1 (fontified t)) . -5537) (undo-tree-id29 . -1) (#("e" 0 1 (fontified t)) . -5538) (undo-tree-id30 . -1) (#(" " 0 1 (fontified t)) . -5539) (undo-tree-id31 . -1) 5540 (5533 . 5540) (#("o" 0 1 (fontified t)) . -5533) (undo-tree-id32 . -1) (#("c" 0 1 (fontified t)) . -5534) (undo-tree-id33 . -1) 5535 (5524 . 5535) (#("i" 0 1 (fontified t)) . -5524) (undo-tree-id34 . -1) (#("n" 0 1 (fontified t)) . -5525) (undo-tree-id35 . -1) (#("g" 0 1 (fontified t)) . -5526) (undo-tree-id36 . -1) (#("t" 0 1 (fontified t)) . -5527) (undo-tree-id37 . -1) 5528 (5520 . 5528) (#("S" 0 1 (fontified t)) . -5520) (undo-tree-id38 . -1) 5521 (5520 . 5521) (5519 . 5521) (#("(" 0 1 (fontified nil face font-lock-comment-face)) . -5519) (5519 . 5520) (5518 . 5519) (5513 . 5518) (#("e" 0 1 (fontified t face font-lock-comment-face)) . -5513) (undo-tree-id39 . -1) (#("v" 0 1 (fontified t face font-lock-comment-face)) . -5514) (undo-tree-id40 . -1) 5515 (5513 . 5515) (#("v" 0 1 (fontified t face font-lock-comment-face)) . -5513) (undo-tree-id41 . -1) (#("e" 0 1 (fontified t face font-lock-comment-face)) . -5514) (undo-tree-id42 . -1) 5515 (5514 . 5515) (#("e" 0 1 (fontified t face font-lock-comment-face)) . -5514) (undo-tree-id43 . -1) 5515 (5508 . 5515) (5507 . 5508) (5506 . 5507) (t 25166 16585 864225 810000) 5474) nil (25166 16629 895751 97000) 0 nil])
+([nil nil ((nil rear-nonsticky nil 5554 . 5555) (#("
+" 0 1 (fontified nil)) . -5585) (5554 . 5586) 5523 (t 25166 16629 914463 360000)) nil (25166 16852 420245 899000) 0 nil])
+([nil nil ((#("g" 0 1 (fontified t)) . 5566)) nil (25166 16852 420244 293000) 0 nil])
+([nil nil ((#("o" 0 1 (fontified t)) . 5566)) nil (25166 16852 420243 605000) 0 nil])
+([nil nil ((#("-" 0 1 (fontified t)) . 5566)) nil (25166 16852 420242 864000) 0 nil])
+([nil nil ((#("m" 0 1 (fontified t)) . 5566)) nil (25166 16852 420241 648000) 0 nil])
+([nil current ((5566 . 5573) (5566 . 5567)) nil (25166 16852 420237 641000) 0 nil])
+nil
