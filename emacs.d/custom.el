@@ -19,6 +19,7 @@
  '(slime-completion-at-point-functions
    '(slime-c-p-c-completion-at-point slime-filename-completion slime-simple-completion-at-point))
  '(slime-highlight-suppressed-forms nil)
+ '(undo-tree-auto-save-history nil)
  '(warning-suppress-types '((comp) (comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
