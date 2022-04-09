@@ -174,7 +174,7 @@
 (straight-use-package 'nim-mode)
 
 ;;; javascript
-(add-hook 'javascript-mode-hook #'lsp)
+(add-hook 'js-mode-hook #'lsp)
 ;;;; svelte
 (straight-use-package 'svelte-mode)
 (add-hook 'svelte-mode-hook #'lsp)
