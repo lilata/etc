@@ -14,8 +14,11 @@ emacs.d/straight
 emacs.d/eshell/history
 emacs.d/recentf
 emacs.d/projects
+## undo tree
+*.~undo-tree~
 
 # ncmpcpp
 config/ncmpcpp/error.log
-# undo tree
-*.~undo-tree~
+
+# vim
+.netrwhist
