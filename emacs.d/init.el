@@ -166,13 +166,16 @@
 (straight-use-package 'elixir-mode)
 (add-to-list 'exec-path "~/.local/share/elixir-ls")
 (add-hook 'elixir-mode-hook #'lsp)
+
 ;;; golang
 (straight-use-package 'go-mode)
 (add-hook 'go-mode-hook #'lsp)
 ;;; nim
 (straight-use-package 'nim-mode)
 
-;;; svelte
+;;; javascript
+(add-hook 'javascript-mode #'lsp)
+;;;; svelte
 (straight-use-package 'svelte-mode)
 (add-hook 'svelte-mode-hook #'lsp)
 
