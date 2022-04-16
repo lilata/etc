@@ -1,3 +1,5 @@
 [user]
 	email = shinji@shinji.rocks
 	name = Shinji
+[url "https://github.com/"]
+	insteadOf = git://github.com/
