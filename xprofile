@@ -6,6 +6,6 @@ dunst &
 # sxhkd &
 # dwmblocks &
 # pidof pulseaudio || pulseaudio --daemonize=no &
-# xcompmgr &
+xcompmgr &
 # pidof urxvtd || urxvtd -q -f &
 [ -f $HOME/.config/wallpape/wallpape.png ] && xwallpaper --zoom $HOME/.config/wallpape/wallpape.png

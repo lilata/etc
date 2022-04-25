@@ -26,7 +26,7 @@ export ALTERNATE_EDITOR=""
 export EDITOR=ec-nox
 export VISUAL=nvim
 
-export BROWSER=firefox
+export BROWSER=chromium
 # setup GPG(not needed)
 # export GPG_TTY=$(tty)
 
