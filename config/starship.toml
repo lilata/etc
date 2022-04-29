@@ -1,12 +1,12 @@
 [username]
 style_user = "white bold"
 style_root = "black bold"
-format = "$user "
+format = "$user"
 disabled = false
 show_always = true
 
 
 [hostname]
 ssh_only = false
-format = "at [$hostname](bold white) "
+format = "@[$hostname](bold white) "
 disabled = false
