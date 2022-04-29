@@ -19,7 +19,6 @@ alias yu='youtube-dl --get-url '
 alias yv='youtube-viewer'
 alias p='mgraftcp --socks5=127.0.0.1:1080'
 alias z='zathura --fork'
-alias v="$EDITOR"
 alias c="xclip -selection clipboard" # copy stdin
 alias nb='newsboat'
 alias download='aria2c -x 8'
