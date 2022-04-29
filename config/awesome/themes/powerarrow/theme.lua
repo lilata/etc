@@ -1,7 +1,7 @@
 --[[
 
-     Powerarrow Awesome WM theme
-     github.com/lcpz
+Powerarrow Awesome WM theme
+github.com/lcpz
 
 --]]
 
@@ -140,6 +140,8 @@ lain.widget.contrib.task.attach(task, {
 })
 task:buttons(my_table.join(awful.button({}, 1, lain.widget.contrib.task.prompt)))
 
+
+
 -- Scissors (xsel copy and paste)
 local scissors = wibox.widget.imagebox(theme.widget_scissors)
 scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
@@ -177,24 +179,45 @@ local volume = lain.widget.alsa {
         widget:set_markup(markup.fontfg(theme.font, "#FEFEFE", tostring(volume_now.level) .. "% "))
     end
 }
+volume.widget:buttons(awful.util.table.join(
+awful.button({}, 1, function() -- left click
+    awful.spawn(string.format("%s -e alsamixer", terminal))
+end),
+awful.button({}, 2, function() -- middle click
+    os.execute(string.format("%s set %s 100%%", volume.cmd, volume.channel))
+    volume.update()
+end),
+awful.button({}, 3, function() -- right click
+    os.execute(string.format("%s set %s toggle", volume.cmd, volume.togglechannel or volume.channel))
+    volume.update()
+end),
+awful.button({}, 4, function() -- scroll up
+    os.execute(string.format("%s set %s 1%%+", volume.cmd, volume.channel))
+    volume.update()
+end),
+awful.button({}, 5, function() -- scroll down
+    os.execute(string.format("%s set %s 1%%-", volume.cmd, volume.channel))
+    volume.update()
+end)
+))
 
 -- MPD
 local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
 local mpdicon = wibox.widget.imagebox(theme.widget_music)
 mpdicon:buttons(my_table.join(
-    awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
-    awful.button({ }, 1, function ()
-        os.execute("mpc prev")
-        theme.mpd.update()
-    end),
-    awful.button({ }, 2, function ()
-        os.execute("mpc toggle")
-        theme.mpd.update()
-    end),
-    awful.button({ }, 3, function ()
-        os.execute("mpc next")
-        theme.mpd.update()
-    end)))
+awful.button({ modkey }, 1, function () awful.spawn.with_shell(musicplr) end),
+awful.button({ }, 1, function ()
+    os.execute("mpc prev")
+    theme.mpd.update()
+end),
+awful.button({ }, 2, function ()
+    os.execute("mpc toggle")
+    theme.mpd.update()
+end),
+awful.button({ }, 3, function ()
+    os.execute("mpc next")
+    theme.mpd.update()
+end)))
 theme.mpd = lain.widget.mpd({
     settings = function()
         if mpd_now.state == "play" then
@@ -296,9 +319,9 @@ local brighticon = wibox.widget.imagebox(theme.widget_brightness)
 -- If you use xbacklight, comment the line with "light -G" and uncomment the line bellow
 -- local brightwidget = awful.widget.watch('xbacklight -get', 0.1,
 local brightwidget = awful.widget.watch('light -G', 0.1,
-    function(widget, stdout, stderr, exitreason, exitcode)
-        local brightness_level = tonumber(string.format("%.0f", stdout))
-        widget:set_markup(markup.font(theme.font, " " .. brightness_level .. "%"))
+function(widget, stdout, stderr, exitreason, exitcode)
+    local brightness_level = tonumber(string.format("%.0f", stdout))
+    widget:set_markup(markup.font(theme.font, " " .. brightness_level .. "%"))
 end)
 
 -- Separators
@@ -347,11 +370,11 @@ function theme.at_screen_connect(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(my_table.join(
-                           awful.button({}, 1, function () awful.layout.inc( 1) end),
-                           awful.button({}, 2, function () awful.layout.set( awful.layout.layouts[1] ) end),
-                           awful.button({}, 3, function () awful.layout.inc(-1) end),
-                           awful.button({}, 4, function () awful.layout.inc( 1) end),
-                           awful.button({}, 5, function () awful.layout.inc(-1) end)))
+    awful.button({}, 1, function () awful.layout.inc( 1) end),
+    awful.button({}, 2, function () awful.layout.set( awful.layout.layouts[1] ) end),
+    awful.button({}, 3, function () awful.layout.inc(-1) end),
+    awful.button({}, 4, function () awful.layout.inc( 1) end),
+    awful.button({}, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
 
@@ -365,56 +388,56 @@ function theme.at_screen_connect(s)
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            spr,
-            s.mytaglist,
-            s.mypromptbox,
-        },
+        layout = wibox.layout.fixed.horizontal,
         spr,
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
-            wibox.container.margin(scissors, dpi(4), dpi(8)),
-            --[[ using shapes
-            pl(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, "#343434"),
-            pl(task, "#343434"),
-            --pl(wibox.widget { mailicon, mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, "#343434"),
+        s.mytaglist,
+        s.mypromptbox,
+    },
+    spr,
+    { -- Right widgets
+    layout = wibox.layout.fixed.horizontal,
+    wibox.widget.systray(),
+    wibox.container.margin(scissors, dpi(4), dpi(8)),
+    --[[ using shapes
+    pl(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, "#343434"),
+    pl(task, "#343434"),
+    --pl(wibox.widget { mailicon, mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, "#343434"),
 
-            pl(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, "#777E76"),
-            pl(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, "#4B696D"),
-            pl(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, "#4B3B51"),
-            --pl(wibox.widget { fsicon, theme.fs and theme.fs.widget, layout = wibox.layout.align.horizontal }, "#CB755B"),
-            pl(wibox.widget { baticon, bat.widget, layout = wibox.layout.align.horizontal }, "#8DAA9A"),
-            pl(wibox.widget { neticon, net.widget, layout = wibox.layout.align.horizontal }, "#C0C0A2"),
-            pl(binclock.widget, "#777E76"),
-            --]]
-            -- using separators
---            arrow(theme.bg_normal, "#343434"),
---            wibox.container.background(wibox.container.margin(wibox.widget { mailicon, theme.mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(7)), "#343434"),
-            arrow(theme.bg_normal, theme.bg_normal),
-            wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(6)), theme.bg_focus),
-            wibox.container.background(wibox.container.margin(volume.widget, dpi(4), dpi(8)), theme.bg_focus),
-            arrow(theme.bg_normal, "#343434"),
-            wibox.container.background(wibox.container.margin(task, dpi(3), dpi(7)), "#343434"),
-            arrow("#343434", "#777E76"),
-            wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, dpi(2), dpi(3)), "#777E76"),
-            arrow("#777E76", "#4B696D"),
-            wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(4)), "#4B696D"),
-            arrow("#4B696D", "#4B3B51"),
-            wibox.container.background(wibox.container.margin(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(4)), "#4B3B51"),
-            arrow("#4B3B51", "#CB755B"),
-            wibox.container.background(wibox.container.margin(wibox.widget { fsicon, theme.fs and theme.fs.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#CB755B"),
-            arrow("#CB755B", "#8DAA9A"),
-            wibox.container.background(wibox.container.margin(wibox.widget { baticon, bat.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#8DAA9A"),
-            arrow("#8DAA9A", "#C0C0A2"),
-            wibox.container.background(wibox.container.margin(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#C0C0A2"),
-            arrow("#C0C0A2", "#CB755B"),
-            wibox.container.background(wibox.container.margin(binclock.widget, dpi(4), dpi(8)), "#CB755B"),
-            wibox.container.background(wibox.container.margin(mytextclock, dpi(4), dpi(8)), "#CB755B"),
-            arrow("#CB755B", theme.bg_normal),
-            --]]
-            s.mylayoutbox,
-        },
+    pl(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, "#777E76"),
+    pl(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, "#4B696D"),
+    pl(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, "#4B3B51"),
+    --pl(wibox.widget { fsicon, theme.fs and theme.fs.widget, layout = wibox.layout.align.horizontal }, "#CB755B"),
+    pl(wibox.widget { baticon, bat.widget, layout = wibox.layout.align.horizontal }, "#8DAA9A"),
+    pl(wibox.widget { neticon, net.widget, layout = wibox.layout.align.horizontal }, "#C0C0A2"),
+    pl(binclock.widget, "#777E76"),
+    --]]
+    -- using separators
+    --            arrow(theme.bg_normal, "#343434"),
+    --            wibox.container.background(wibox.container.margin(wibox.widget { mailicon, theme.mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(7)), "#343434"),
+    arrow(theme.bg_normal, theme.bg_normal),
+    wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(6)), theme.bg_focus),
+    wibox.container.background(wibox.container.margin(volume.widget, dpi(4), dpi(8)), theme.bg_focus),
+    arrow(theme.bg_normal, "#343434"),
+    wibox.container.background(wibox.container.margin(task, dpi(3), dpi(7)), "#343434"),
+    arrow("#343434", "#777E76"),
+    wibox.container.background(wibox.container.margin(wibox.widget { memicon, mem.widget, layout = wibox.layout.align.horizontal }, dpi(2), dpi(3)), "#777E76"),
+    arrow("#777E76", "#4B696D"),
+    wibox.container.background(wibox.container.margin(wibox.widget { cpuicon, cpu.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(4)), "#4B696D"),
+    arrow("#4B696D", "#4B3B51"),
+    wibox.container.background(wibox.container.margin(wibox.widget { tempicon, temp.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(4)), "#4B3B51"),
+    arrow("#4B3B51", "#CB755B"),
+    wibox.container.background(wibox.container.margin(wibox.widget { fsicon, theme.fs and theme.fs.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#CB755B"),
+    arrow("#CB755B", "#8DAA9A"),
+    wibox.container.background(wibox.container.margin(wibox.widget { baticon, bat.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#8DAA9A"),
+    arrow("#8DAA9A", "#C0C0A2"),
+    wibox.container.background(wibox.container.margin(wibox.widget { nil, neticon, net.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(3)), "#C0C0A2"),
+    arrow("#C0C0A2", "#CB755B"),
+    wibox.container.background(wibox.container.margin(binclock.widget, dpi(4), dpi(8)), "#CB755B"),
+    wibox.container.background(wibox.container.margin(mytextclock, dpi(4), dpi(8)), "#CB755B"),
+    arrow("#CB755B", theme.bg_normal),
+    --]]
+    s.mylayoutbox,
+},
     }
 end
 

@@ -326,67 +326,6 @@ local dockshape = function(cr, width, height)
     gears.shape.partially_rounded_rect(cr, width, height, false, true, true, false, 6)
 end
 
-function theme.vertical_wibox(s)
-    -- Create the vertical wibox
-    s.dockheight = (35 *  s.workarea.height)/100
-
-    s.myleftwibox = wibox({ screen = s, x=0, y=s.workarea.height/2 - s.dockheight/2, width = dpi(6), height = s.dockheight, fg = theme.fg_normal, bg = barcolor2, ontop = true, visible = true, type = "dock" })
-
-    if s.index > 1 and s.myleftwibox.y == 0 then
-        s.myleftwibox.y = screen[1].myleftwibox.y
-    end
-
-    -- Add widgets to the vertical wibox
-    s.myleftwibox:setup {
-        layout = wibox.layout.align.vertical,
-        {
-            layout = wibox.layout.fixed.vertical,
-            lspace1,
-            s.mytaglist,
-            lspace2,
-            s.layoutb,
-            wibox.container.margin(mylauncher, dpi(5), dpi(8), dpi(13), dpi(0)),
-        },
-    }
-
-    -- Add toggling functionalities
-    s.docktimer = gears.timer{ timeout = 2 }
-    s.docktimer:connect_signal("timeout", function()
-        local s = awful.screen.focused()
-        s.myleftwibox.width = dpi(9)
-        s.layoutb.visible = false
-        mylauncher.visible = false
-        if s.docktimer.started then
-            s.docktimer:stop()
-        end
-    end)
-    tag.connect_signal("property::selected", function(t)
-        local s = t.screen or awful.screen.focused()
-        s.myleftwibox.width = dpi(38)
-        s.layoutb.visible = true
-        mylauncher.visible = true
-        gears.surface.apply_shape_bounding(s.myleftwibox, dockshape)
-        if not s.docktimer.started then
-            s.docktimer:start()
-        end
-    end)
-
-    s.myleftwibox:connect_signal("mouse::leave", function()
-        local s = awful.screen.focused()
-        s.myleftwibox.width = dpi(9)
-        s.layoutb.visible = false
-        mylauncher.visible = false
-    end)
-
-    s.myleftwibox:connect_signal("mouse::enter", function()
-        local s = awful.screen.focused()
-        s.myleftwibox.width = dpi(38)
-        s.layoutb.visible = true
-        mylauncher.visible = true
-        gears.surface.apply_shape_bounding(s.myleftwibox, dockshape)
-    end)
-end
-
 
 function theme.at_screen_connect(s)
     -- Quake application
@@ -416,15 +355,6 @@ function theme.at_screen_connect(s)
                            awful.button({}, 4, function () awful.layout.inc( 1) end),
                            awful.button({}, 5, function () awful.layout.inc(-1) end)))
     s.layoutb = wibox.container.margin(s.mylayoutbox, dpi(8), dpi(11), dpi(3), dpi(3))
-
-    -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons, {
-        font = theme.taglist_font,
-        shape = gears.shape.rectangle,
-        spacing = dpi(10),
-        square_unsel = theme.square_unsel,
-        bg_focus = barcolor
-    }, nil, wibox.layout.fixed.vertical())
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, awful.util.tasklist_buttons, { bg_focus = "#00000000" })
@@ -464,7 +394,6 @@ function theme.at_screen_connect(s)
         },
     }
 
-    gears.timer.delayed_call(theme.vertical_wibox, s)
 end
 
 return theme
