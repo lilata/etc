@@ -1,4 +1,7 @@
 #! /bin/env zsh
+SAVEHIST=10000  # Save most-recent 1000 lines
+HISTFILE=~/.zsh_history
+
 autoload -U colors && colors	# Load colors
 PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}%b$ "
 # set to vim mode and vim cursor

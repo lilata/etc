@@ -23,3 +23,7 @@ config/ncmpcpp/error.log
 # vim
 .netrwhist
 plug.vim.old
+
+
+# zsh
+*.zwc
