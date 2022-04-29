@@ -50,6 +50,9 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey  ^x^e edit-command-line
 stty -ixon
 
+# shellrc
+[ -f "$HOME/.shellrc" ] && source "$HOME/.shellrc"
+
 # load files
 ZSHRC_DIR="$HOME/.zshrc.d"
 if [ -d "$ZSHRC_DIR" ]; then
@@ -57,11 +60,6 @@ if [ -d "$ZSHRC_DIR" ]; then
         source $f
     done
 fi
-# plugins
-syntax_highlighting_plugin="$ZSHRC_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-[ -f "$syntax_highlighting_plugin" ] && source "$syntax_highlighting_plugin"
-# shellrc
-[ -f "$HOME/.shellrc" ] && source "$HOME/.shellrc"
 
 # PATH dedup
 export PATH=$(printf "%s" "$PATH" | awk -v RS=':' '!a[$1]++ { if (NR > 1) printf RS; printf $1 }')
