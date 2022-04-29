@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 start-pulseaudio-x11 &
-ibus-daemon -drx &
+fcitx5 -d &
 dunst &
 # pidof pipewire || pipewire &
 # sxhkd &

@@ -32,10 +32,11 @@ xset r rate 300 50 &
 
 setxkbmap -option "ctrl:nocaps"
 
-# ibus config for CJK input method
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+# fcitx config for CJK input method
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
 # source the xprofile
 [ -f $HOME/.xprofile ] && . $HOME/.xprofile
 # run window manager

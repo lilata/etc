@@ -16,7 +16,7 @@ export LC_COLLATE="C"
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 # default programs
-export WINDOW_MANAGER=i3
+export WINDOW_MANAGER=awesome
 
 export FILE=ranger
 
