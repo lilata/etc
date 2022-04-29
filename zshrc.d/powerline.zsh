@@ -1,4 +1,12 @@
-powerline-daemon -q
+#! /usr/bin/env zsh
+# If you want to remove the package powerline,
+# pls use bash to do so.
+if hash powerline-daemon >/dev/null 2>&1
+then
+	powerline-daemon -q
+else
+    return 0
+fi
 local _POWERLINE_SOURCED="$0:A"
 
 _powerline_columns_fallback() {
