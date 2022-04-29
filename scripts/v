@@ -1,4 +1,4 @@
 #! /usr/bin/env sh
-hash nvim >/dev/null 2>&1 && exec nvim $*
-hash vim >/dev/null 2>&1 && exec vim $*
-hash vi >/dev/null 2>&1 && exec vi $*
+for e in nvim vim vi; do
+    hash $e >/dev/null 2>&1 && exec $e $*
+done

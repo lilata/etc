@@ -23,8 +23,8 @@ export FILE=ranger
 export TERMINAL=alacritty
 
 export ALTERNATE_EDITOR=""
-export EDITOR=ec-nox
-export VISUAL=nvim
+export EDITOR=ec
+export VISUAL=v
 
 export BROWSER=chromium
 # setup GPG(not needed)
