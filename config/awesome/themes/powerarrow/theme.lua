@@ -113,15 +113,14 @@ local binclock = require("themes.powerarrow.binclock"){
 local mytextclock = wibox.widget.textclock(markup("#FFFFFF", "%a %d %b, %H:%M"))
 mytextclock.font = theme.font
 theme.cal = lain.widget.cal({
-    attach_to = { mytextclock },
+    attach_to = { mytextclock, binclock.widget },
     notification_preset = {
         fg = "#FFFFFF",
         bg = theme.bg_normal,
-        position = "top_middle",
         font = "Monospace 15"
     }
 })
--- Calendar
+--[[ Calendar
 theme.cal = lain.widget.cal({
     --cal = "cal --color=always",
     attach_to = { binclock.widget },
@@ -131,6 +130,7 @@ theme.cal = lain.widget.cal({
         bg   = theme.bg_normal
     }
 })
+--]]
 
 -- Taskwarrior
 local task = wibox.widget.imagebox(theme.widget_task)
@@ -143,7 +143,6 @@ task:buttons(my_table.join(awful.button({}, 1, lain.widget.contrib.task.prompt))
 -- Scissors (xsel copy and paste)
 local scissors = wibox.widget.imagebox(theme.widget_scissors)
 scissors:buttons(my_table.join(awful.button({}, 1, function() awful.spawn.with_shell("xsel | xsel -i -b") end)))
-
 -- Mail IMAP check
 --[[ commented because it needs to be set before use
 local mailicon = wibox.widget.imagebox(theme.widget_mail)
@@ -170,6 +169,14 @@ theme.volume = lain.widget.alsabar({
     --togglechannel = "IEC958,3",
     notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
 })
+
+-- ALSA
+local volume = lain.widget.alsa {
+    timeout = 1,
+    settings = function()
+        widget:set_markup(markup.fontfg(theme.font, "#FEFEFE", tostring(volume_now.level) .. "% "))
+    end
+}
 
 -- MPD
 local musicplr = awful.util.terminal .. " -title Music -g 130x34-320+16 -e ncmpcpp"
@@ -386,6 +393,7 @@ function theme.at_screen_connect(s)
 --            wibox.container.background(wibox.container.margin(wibox.widget { mailicon, theme.mail and theme.mail.widget, layout = wibox.layout.align.horizontal }, dpi(4), dpi(7)), "#343434"),
             arrow(theme.bg_normal, theme.bg_normal),
             wibox.container.background(wibox.container.margin(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, dpi(3), dpi(6)), theme.bg_focus),
+            wibox.container.background(wibox.container.margin(volume.widget, dpi(4), dpi(8)), theme.bg_focus),
             arrow(theme.bg_normal, "#343434"),
             wibox.container.background(wibox.container.margin(task, dpi(3), dpi(7)), "#343434"),
             arrow("#343434", "#777E76"),
@@ -403,7 +411,7 @@ function theme.at_screen_connect(s)
             arrow("#C0C0A2", "#CB755B"),
             wibox.container.background(wibox.container.margin(binclock.widget, dpi(4), dpi(8)), "#CB755B"),
             wibox.container.background(wibox.container.margin(mytextclock, dpi(4), dpi(8)), "#CB755B"),
-            arrow("#CB755B", "#000000"),
+            arrow("#CB755B", theme.bg_normal),
             --]]
             s.mylayoutbox,
         },
