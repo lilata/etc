@@ -735,10 +735,11 @@ awful.rules.rules = {
         }
       }, properties = { floating = true }},
 
-    -- Remove titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = false }
+     -- Remove titlebars to normal clients and dialogs
+      { rule_any = {type = { "normal", "dialog" }
+      }, properties = { titlebars_enabled = true }
     },
+    --
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -784,7 +785,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c, { size = 16 }) : setup {
+    awful.titlebar(c, { height = 13 }) : setup {
         { -- Left
             awful.titlebar.widget.iconwidget(c),
             buttons = buttons,
