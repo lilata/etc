@@ -9,6 +9,7 @@ export PATH="$HOME/.cargo/bin:$PATH" # binaries installed by cargo
 export PATH="$HOME/.scripts:$HOME/.scripts/statusbar:$PATH" # some of my scripts
 export PATH="$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH" # haskell
 export PATH="$HOME/.local/bin:$PATH" # local binaries
+export PATH="$HOME/.roswell/bin:$PATH" # roswell binaries
 
 export LANG="en_US.UTF-8"
 export LC_COLLATE="C"
