@@ -27,7 +27,7 @@ export ALTERNATE_EDITOR=""
 export EDITOR=ec
 export VISUAL=v
 
-export BROWSER=chromium
+export BROWSER=firefox
 # setup GPG(not needed)
 # export GPG_TTY=$(tty)
 
