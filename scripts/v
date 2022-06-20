@@ -1,4 +1,4 @@
 #! /usr/bin/env sh
 for e in nvim vim vi nano emacs; do
-    hash $e >/dev/null 2>&1 && exec $e $*
+    hash $e >/dev/null 2>&1 && exec $e "$*"
 done
