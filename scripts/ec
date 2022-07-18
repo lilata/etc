@@ -3,5 +3,5 @@ if ! hash "emacsclient" > /dev/null 2>&1; then
     echo "emacsclient does not exist"
     exit 1
 fi
-exec emacsclient -c -a "" $*
+exec emacsclient -c -a "" "$*"
 
