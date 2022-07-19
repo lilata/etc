@@ -1,10 +1,8 @@
 * My EMACS Configuration
-** Set and Load Custom File
+** Basic Settings
 #+BEGIN_SRC emacs-lisp
-
   (setq custom-file (concat user-mjolnir-directory "custom.el"))
   (load custom-file t)
-      ;;; some config
   (setq package-native-compile t)
   (setq *lisp-modes*
         '(common-lisp-mode
@@ -48,7 +46,15 @@
                                           ; Use spaces, not tabs.
   (setq-default indent-tabs-mode nil)
   (setq indent-tabs-mode nil)
-      ;;; packages
+  (defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
+  (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
+  (setq backup-directory-alist (list (cons ".*" backup-dir)))
+  (setq auto-save-list-file-prefix autosave-dir)
+  (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
+
+#+END_SRC
+** straight.el bootstrap
+#+begin_src emacs-lisp
   (setq package-enable-at-startup nil)
   (defvar bootstrap-version)
   (let ((bootstrap-file
@@ -62,37 +68,48 @@
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
+#+end_src
+** Programming
+*** Editor
+#+begin_src emacs-lisp
+#+end_src
+*** Python
+#+begin_comment
+
+#+end_comment
+#+begin_src emacs-lisp
+  (straight-use-package 'lsp-python-ms)
+  (setq lsp-python-ms-auto-install-server t)
+
+  (straight-use-package 'py-isort)
+  (add-hook 'before-save-hook 'py-isort-before-save)
+  (setq py-isort-options '("--lines=100"))
 
 
-      ;;; pairs
+#+end_src
+** Misc
+#+BEGIN_SRC emacs-lisp
+
+
   (straight-use-package 'rainbow-delimiters)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
   (straight-use-package 'rainbow-mode)
   (straight-use-package 'highlight-parentheses)
   (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
   (straight-use-package 'flash-paren)
   (flash-paren-mode 1)
-
   (show-paren-mode 1)
   (setq show-paren-delay 0)
 
   (straight-use-package 'smartparens)
   (smartparens-global-mode 1)
+
   (sp-local-pair *lisp-modes*  "'" nil :actions nil)
   (sp-local-pair *lisp-modes*  "`" nil :actions nil)
 
-      ;;; backup/autosave
-  (defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
-  (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
-  (setq backup-directory-alist (list (cons ".*" backup-dir)))
-  (setq auto-save-list-file-prefix autosave-dir)
-  (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
-      ;;; clipboard
   (straight-use-package 'simpleclip)
   (simpleclip-mode 1)
 
-      ;;; Evil
   (straight-use-package 'evil)
   (setq evil-move-beyond-eol t)
   (evil-mode 1)
@@ -110,14 +127,12 @@
     (evil-scroll-line-to-center nil))
                                           ; (define-key evil-normal-state-map (kbd "k") 'evil-kzz)
 
-      ;;; Which Key
   (straight-use-package 'which-key)
   (setq which-key-show-early-on-C-h t)
   (setq which-key-idle-delay 1)
   (setq which-key-idle-secondary-delay 0.05)
   (which-key-mode)
 
-      ;;; helm
   (straight-use-package 'helm)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
@@ -139,12 +154,10 @@
                       "k" 'kill-buffer
                       )
 
-      ;;; programming
-  ;; projects
   (straight-use-package 'projectile)
   (straight-use-package 'helm-projectile)
-      ;;; company
   (straight-use-package 'company)
+  (straight-use-package 'lsp-mode)
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1)
   (with-eval-after-load 'company
@@ -156,40 +169,29 @@
   (company-tng-configure-default)
   (add-hook 'after-init-hook 'global-company-mode)
 
-      ;;; Common Lisp
   (straight-use-package 'slime)
   (setq inferior-lisp-program "ros run")
-  ;;(straight-use-package 'slime-company)
-  ;;(setq slime-company-completion 'fuzzy
-  ;;      slime-company-after-completion 'slime-company-just-one-space)
   (straight-use-package 'lispy)
-      ;;; python
+
+
   (straight-use-package 'pyvenv)
   (setenv "WORKON_HOME" "~/.local/share/virtualenvs") ;; use the path from pipenv
 
-      ;;; elixir
+
   (straight-use-package 'elixir-mode)
   (add-to-list 'exec-path "~/.local/share/elixir-ls")
   (add-hook 'elixir-mode-hook #'lsp)
 
-      ;;; golang
   (straight-use-package 'go-mode)
   (add-hook 'go-mode-hook #'lsp)
-      ;;; nim
+
   (straight-use-package 'nim-mode)
 
-      ;;; javascript
   (add-hook 'js-mode-hook #'lsp)
-      ;;;; svelte
   (straight-use-package 'svelte-mode)
   (add-hook 'svelte-mode-hook #'lsp)
 
-      ;;; LSP
-  (straight-use-package 'lsp-mode)
-  (straight-use-package 'lsp-python-ms)
-  (setq lsp-python-ms-auto-install-server t)
 
-      ;;; HTML
   (straight-use-package 'emmet-mode)
   (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
@@ -201,10 +203,7 @@
     )
   (define-key evil-normal-state-map (kbd ",") 'evil-emmet-expand-line)
 
-      ;;; end programming
 
-
-      ;;; Misc
 
   (straight-use-package 'rg)
 
@@ -226,7 +225,7 @@
   (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
   (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
   (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
-      ;;; Terminal
+
   (straight-use-package 'vterm)
   (vterm-module-compile)
   (defun toggle-vterm ()
@@ -240,19 +239,14 @@
   (global-undo-tree-mode)
   (evil-set-undo-system 'undo-tree)
 
-      ;;; themes
   (straight-use-package 'doom-themes)
-  ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-sourcerer t)
 
-  ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
 
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
   (doom-themes-neotree-config)
-  ;; or for treemacs users
   (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
   (doom-themes-treemacs-config)
 
@@ -263,4 +257,4 @@
 
   (straight-use-package 'nyan-mode)
   (nyan-mode 1)
-  #+END_SRC
+#+END_SRC
