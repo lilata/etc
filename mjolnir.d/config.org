@@ -1,8 +1,10 @@
+* My EMACS Configuration
+** Set and Load Custom File
 #+BEGIN_SRC emacs-lisp
-  
+
   (setq custom-file (concat user-mjolnir-directory "custom.el"))
   (load custom-file t)
-    ;;; some config
+      ;;; some config
   (setq package-native-compile t)
   (setq *lisp-modes*
         '(common-lisp-mode
@@ -46,7 +48,7 @@
                                           ; Use spaces, not tabs.
   (setq-default indent-tabs-mode nil)
   (setq indent-tabs-mode nil)
-    ;;; packages
+      ;;; packages
   (setq package-enable-at-startup nil)
   (defvar bootstrap-version)
   (let ((bootstrap-file
@@ -62,7 +64,7 @@
     (load bootstrap-file nil 'nomessage))
 
 
-    ;;; pairs
+      ;;; pairs
   (straight-use-package 'rainbow-delimiters)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
@@ -80,16 +82,17 @@
   (sp-local-pair *lisp-modes*  "'" nil :actions nil)
   (sp-local-pair *lisp-modes*  "`" nil :actions nil)
 
-    ;;; backup/autosave
+      ;;; backup/autosave
   (defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
   (defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
   (setq backup-directory-alist (list (cons ".*" backup-dir)))
   (setq auto-save-list-file-prefix autosave-dir)
   (setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
-    ;;; clipboard
+      ;;; clipboard
   (straight-use-package 'simpleclip)
   (simpleclip-mode 1)
-    ;;; Evil
+
+      ;;; Evil
   (straight-use-package 'evil)
   (setq evil-move-beyond-eol t)
   (evil-mode 1)
@@ -107,14 +110,14 @@
     (evil-scroll-line-to-center nil))
                                           ; (define-key evil-normal-state-map (kbd "k") 'evil-kzz)
 
-    ;;; Which Key
+      ;;; Which Key
   (straight-use-package 'which-key)
   (setq which-key-show-early-on-C-h t)
   (setq which-key-idle-delay 1)
   (setq which-key-idle-secondary-delay 0.05)
   (which-key-mode)
 
-    ;;; helm
+      ;;; helm
   (straight-use-package 'helm)
   (global-set-key (kbd "M-x") 'helm-M-x)
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
@@ -124,7 +127,7 @@
     (define-key helm-map (kbd "TAB") #'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-i") #'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-z") #'helm-select-action))
-    ;;; general.el
+      ;;; general.el
   (straight-use-package 'general)
   (setq general-default-keymaps 'evil-normal-state-map)
   (general-define-key :prefix "SPC"
@@ -136,11 +139,11 @@
                       "k" 'kill-buffer
                       )
 
-    ;;; programming
+      ;;; programming
   ;; projects
   (straight-use-package 'projectile)
   (straight-use-package 'helm-projectile)
-    ;;; company
+      ;;; company
   (straight-use-package 'company)
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1)
@@ -153,40 +156,40 @@
   (company-tng-configure-default)
   (add-hook 'after-init-hook 'global-company-mode)
 
-    ;;; Common Lisp
+      ;;; Common Lisp
   (straight-use-package 'slime)
   (setq inferior-lisp-program "ros run")
   ;;(straight-use-package 'slime-company)
   ;;(setq slime-company-completion 'fuzzy
   ;;      slime-company-after-completion 'slime-company-just-one-space)
   (straight-use-package 'lispy)
-    ;;; python
+      ;;; python
   (straight-use-package 'pyvenv)
   (setenv "WORKON_HOME" "~/.local/share/virtualenvs") ;; use the path from pipenv
 
-    ;;; elixir
+      ;;; elixir
   (straight-use-package 'elixir-mode)
   (add-to-list 'exec-path "~/.local/share/elixir-ls")
   (add-hook 'elixir-mode-hook #'lsp)
 
-    ;;; golang
+      ;;; golang
   (straight-use-package 'go-mode)
   (add-hook 'go-mode-hook #'lsp)
-    ;;; nim
+      ;;; nim
   (straight-use-package 'nim-mode)
 
-    ;;; javascript
+      ;;; javascript
   (add-hook 'js-mode-hook #'lsp)
-    ;;;; svelte
+      ;;;; svelte
   (straight-use-package 'svelte-mode)
   (add-hook 'svelte-mode-hook #'lsp)
 
-    ;;; LSP
+      ;;; LSP
   (straight-use-package 'lsp-mode)
   (straight-use-package 'lsp-python-ms)
   (setq lsp-python-ms-auto-install-server t)
 
-    ;;; HTML
+      ;;; HTML
   (straight-use-package 'emmet-mode)
   (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
   (add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
@@ -198,10 +201,10 @@
     )
   (define-key evil-normal-state-map (kbd ",") 'evil-emmet-expand-line)
 
-    ;;; end programming
+      ;;; end programming
 
 
-    ;;; Misc
+      ;;; Misc
 
   (straight-use-package 'rg)
 
@@ -223,7 +226,7 @@
   (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
   (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
   (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
-    ;;; Terminal
+      ;;; Terminal
   (straight-use-package 'vterm)
   (vterm-module-compile)
   (defun toggle-vterm ()
@@ -237,7 +240,7 @@
   (global-undo-tree-mode)
   (evil-set-undo-system 'undo-tree)
 
-    ;;; themes
+      ;;; themes
   (straight-use-package 'doom-themes)
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -260,4 +263,4 @@
 
   (straight-use-package 'nyan-mode)
   (nyan-mode 1)
-#+END_SRC
+  #+END_SRC
